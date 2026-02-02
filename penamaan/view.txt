@@ -1,0 +1,34 @@
+# PENAMAAN VIEW DI D365CE
+## PENAMAAN VIEW 
+**View Naming:** 
+- Format : [Adjective/Filter] EntityName atau EntityName - [Purpose/Filter]
+
+**View Categories:** 
+   - **Default Views:** ([Active/Inactive/All] - EntityName)
+   - **Filtered Views:** (My EntityName/My Team’s Entity Name/EntityName –[Status/Category])
+   - **Purpose-Specific Views:** (EntityName – [Lookup View/ Associated View/ Advanced Find View/ Dashboard View])
+
+**Contoh:** 
+- Active Service Registration 
+- My Service Registration 
+- Service Registration - Pending Approval
+
+
+## Best Practice
+1. Mulai dengan status atau scope (Active, My, All) untuk system views
+2. Gunakan dash (-) untuk memisahkan entity name dan purpose/filter
+3. Hindari nama yang terlalu panjang (maksimal 50 karakter untuk readability)
+4. Prioritaskan views yang paling sering digunakan di urutan teratas
+5. Sertakan informasi filter atau purpose yang jelas
+6. Gunakan naming yang konsisten dengan security roles atau karakteristik user 
+
+
+## Checklist Validasi Penamaan VIEW
+[  ] ✅ System views dimulai dengan status/scope (Active, My, All)
+[  ] ✅ Custom views menggunakan format: EntityName - Purpose/Filter
+[  ] ✅ Nama view tidak melebihi 50 karakter
+[  ] ✅ Filter atau purpose tercantum dengan jelas
+[  ] ✅ Konsisten dengan bahasa yang dipilih
+[  ] ✅ Lookup views dan Associated views diberi label yang sesuai
+[  ] ✅ View names menghindari penggunaan angka atau kode teknis
+
