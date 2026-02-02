@@ -18,20 +18,12 @@
     margin-top: 1em;
     margin-bottom: 0.5em;
   }
-
-  #content {
-    overflow: hidden; /* supaya tinggi kontainer ikut menyesuaikan gambar yang di-float */
-  }
-  #content::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-
+  #content { overflow: hidden; }
+  #content::after { content: ""; display: block; clear: both; }
   .thumb {
     float: right;
-    margin: 0 40px 15px 15px; /* jarak dari teks dan tepi kanan */
-    width: 400px;             /* lebar box gambar */
+    margin: 0 40px 15px 15px;
+    width: 400px;
     text-align: center;
   }
   .thumb img {
@@ -47,10 +39,15 @@
 <div id="content">Memuat...</div>
 <script>
   const params = new URLSearchParams(window.location.search);
-  const file = params.get("file");
+  const file   = params.get("file");
+  const folder = params.get("folder") || "penamaan_metadata"; 
+  // default ke penamaan_metadata kalau tidak ada parameter folder
 
   if (file) {
-    fetch("penamaan_metadata/" + file)
+    const fileUrl  = folder + "/" + file;
+    const imageUrl = folder + "/" + file.replace(".txt", ".png");
+
+    fetch(fileUrl)
       .then(r => r.text())
       .then(text => {
         // parsing markdown-like
@@ -62,25 +59,20 @@
           .replace(/`(.*?)`/gim, "<code>$1</code>")
           .replace(/\n/g, "<br>");
 
-        const imageFile = file.replace(".txt", ".png");
-        const imageUrl = "penamaan_metadata/" + imageFile;
-
         // cek apakah gambar ada
         fetch(imageUrl, { method: "HEAD" })
           .then(res => {
             if (res.ok) {
-              // sisipkan box gambar setelah h1
-              html = html.replace(/<h1>(.*?)<\/h1>/, function(match, p1) {
-                return "<h1>" + p1 + "</h1>" +
-                       "<div class='thumb'>" +
-                       "<img src='" + imageUrl + "' alt='Gambar terkait'>" +
-                       "</div>";
+              html = html.replace(/<h1>(.*?)<\/h1>/, (match, p1) => {
+                return `<h1>${p1}</h1>
+                        <div class="thumb">
+                          <img src="${imageUrl}" alt="Gambar terkait">
+                        </div>`;
               });
             }
             document.getElementById("content").innerHTML = html;
           })
           .catch(() => {
-            // kalau gambar tidak ada, tampilkan teks saja
             document.getElementById("content").innerHTML = html;
           });
       })
