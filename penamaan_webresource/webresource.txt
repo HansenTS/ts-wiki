@@ -1,0 +1,95 @@
+# STANDARISASI WEB RESOURCE UNTUK D365CE
+## STRUKTUR PENAMAAN FILE
+## 1. Struktur Penamaan File:
+- **Javascript:** 
+   - Gunakan PascalCase untuk setiap segmen, pisahkan dengan titik
+   - Format : TSINDO.[NAMA PROJECT].Script.[NAMA_MODULE].[NAMA_ENTITY].js
+   - Contoh : 
+      1. TSINDO.YANA.Script.General.xti_account.js
+      2. TSINDO.BSI.Script.Service.xti_workorder.js
+
+- **HTML:** 
+   - Gunakan PascalCase untuk setiap segmen, pisahkan dengan titik
+   - Format : TSINDO.[NAMA PROJECT].Webpage.[NAMA_FORM].js
+   - Contoh: 
+      1. TSINDO.YANA.Webpage.Addwoline.html
+      2. TSINDO.YANA.Webpage.Showlistcoupon.html
+
+- **CSS:** 
+   - Gunakan PascalCase untuk setiap segmen, pisahkan dengan titik
+   - Format : TSINDO.[NAMA PROJECT].Style.[NAMA_FORM].js
+   - Contoh: 
+      1. TSINDO.YANA.Style.Marketingcampaign.css
+      2. TSINDO.YANA.Style.Addwoline.css
+
+- **Image/Icon Resources:** 
+   - Gunakan PascalCase untuk setiap segmen, pisahkan dengan titik
+   - Format : TSINDO.[NAMA PROJECT].Icon.[Image_Name].js
+   - Contoh: 
+      1. TSINDO.YANA.Icon.Workorder.svg
+      2. TSINDO.YANA.Icon.Expander.svg
+      3. TSINDO.YANA.Icon.Rush.svg
+
+
+
+## 2. Struktur Namespace dalam Kode:
+- Contoh : 
+if (TSINDO === undefined) { Technosoft = {}; }
+if (TSINDO.YANA === undefined) { Technosoft.BSI = {}; }
+if (TSINDO.YANA.Script === undefined) { Technosoft.BSI.Script = {}; }
+if (TSINDO.YANA.Script.Service === undefined) { Technosoft.BSI.Script.Service = {}; };
+
+TSINDO.YANA.Script.Service.xti_workorder = {
+    TSINDO.YANA.Script.Service.xti_workorder.onLoad = function(executionContext) {
+           // Implementation
+    };
+    TSINDO.YANA.Script.Service.xti_workorder.validateAccount = function(executionContext) {
+           // Implementation
+    };
+}
+
+
+## 3. Konvensi Penamaan Fungsi
+
+- **Event Handlers:** `on{EventName}` (contoh: `onLoad`, `onChange`, `onSave`)
+- **Validation Functions:** `validate{EntityName}` (contoh: `validateAccount`)
+- **Utility Functions:** `{verb}{Noun}` (contoh: `calculateDiscount`, `formatPhoneNumber`)
+- **Helper Functions:** Awali dengan underscore untuk fungsi private (contoh: `_getFormContext`)
+
+## 4. Organisasi Folder/Publisher Prefix
+
+- **Publisher Prefix:** Gunakan prefix unik untuk organisasi (contoh: `contoso_`)
+- **Display Name:** Sama dengan nama file tanpa extension
+- **Name (Unique Name):** Otomatis dengan prefix publisher
+
+## Best Practice
+### Dokumentasi
+
+- Setiap file harus memiliki header comment yang menjelaskan purpose, author, dan date
+- Dokumentasikan setiap fungsi public dengan JSDoc format
+
+### Dependencies
+
+- Library dependencies harus didaftarkan dalam form properties dengan urutan yang benar
+- Gunakan namespace yang konsisten untuk menghindari konflik
+
+### Versioning
+
+- Implementasikan version tracking dalam comment header
+- Format: `@version 1.0.0 - YYYY-MM-DD`
+
+### Error Handling
+
+- Selalu gunakan try-catch blocks untuk fungsi critical
+- Log errors dengan informasi yang cukup untuk debugging
+
+
+## Checklist Validasi Penamaan Solution
+[ ]✅Buat namespace dengan format `CompanyName.ModuleName.EntityName`
+[ ]✅Gunakan naming convention yang konsisten untuk file web resource
+[ ]✅Tambahkan header documentation dengan file overview
+[ ]✅Dokumentasikan semua public functions dengan JSDoc
+[ ]✅Implementasikan error handling dengan try-catch
+[ ]✅Test di development environment sebelum deploy
+[ ]✅Update version number dan changelog
+[ ]✅Review code dengan tim sebelum production deployment
