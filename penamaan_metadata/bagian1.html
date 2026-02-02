@@ -1,0 +1,28 @@
+<script>
+  // Daftar file bagian (gunakan path subfolder)
+  const bagianFiles = [
+    { name: "Bagian 1", file: "penamaan/bagian1.txt" },
+    { name: "Bagian 2", file: "penamaan/bagian2.txt" },
+    { name: "Bagian 3", file: "penamaan/bagian3.txt" }
+  ];
+
+  // Generate submenu otomatis
+  const submenu = document.getElementById("submenu-product1");
+  bagianFiles.forEach(item => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.textContent = item.name;
+    a.onclick = () => loadContent(item.file);
+    li.appendChild(a);
+    submenu.appendChild(li);
+  });
+
+  function toggleSubmenu() {
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+  }
+
+  // Load isi file ke iframe (agar bisa jalan di lokal)
+  function loadContent(file) {
+    document.getElementById("content-frame").src = file;
+  }
+</script>

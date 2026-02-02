@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #202122;
+    padding: 20px;
+  }
+  h1, h2 {
+    font-family: "Linux Libertine", Georgia, serif;
+    border-bottom: 1px solid #a2a9b1;
+    font-weight: normal;
+  }
+</style>
+</head>
+<body>
+<div id="content"></div>
+<script>
+  // isi teks ditulis langsung di sini
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function() {
+    let text = reader.result;
+
+
+  const text = `
+# Best Practice Penamaan Attribute di D365CE
+
+Dalam **Dynamics 365 Customer Engagement (D365CE)**, setiap atribut memiliki 
+**Schema Name** dan *Display Name*.
+
+## Aturan Panjang Nama
+- Schema Name: maksimal 50 karakter
+- Display Name: maksimal 100 karakter
+- Logical Name: sama dengan Schema Name
+`;
+
+  // parsing sederhana
+  let html = text
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
+    .replace(/\*(.*?)\*/gim, "<i>$1</i>")
+    .replace(/\n/g, "<br>");
+  document.getElementById("content").innerHTML = html;
+</script>
+</body>
+</html>
