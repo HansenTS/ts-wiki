@@ -1,0 +1,27 @@
+# PENAMAAN PUBLISHER DI D365CE
+## Publisher Information
+**Name:** Gunakan nama resmi organisasi/proyek  
+        - Contoh: Technosoft Project Indonesia  
+        - Huruf kecil semua  
+        - Tanpa spasi / simbol – hanya huruf  
+        - Harus unik – tidak boleh sama dengan publisher lain  
+
+**Prefix:** xti  
+        - Digunakan untuk semua entity, attribute, dan solution yang dibuat.  
+        - Contoh entity: xti_customer, xti_order  
+
+**Description:** Jelaskan tujuan publisher secara singkat  
+        - Contoh: Publisher untuk solusi Technosoft Project Indonesia  
+
+## Best Practice
+- Buat satu publisher per organisasi/divisi → supaya jelas asal komponen  
+- Jangan gunakan `new_` (default) → rawan bentrok dan tidak profesional  
+- Dokumentasikan prefix di solution governance → semua developer wajib pakai  
+- Kalau ada vendor/partner, minta mereka pakai prefix berbeda → mudah tracking
+
+## Checklist Validasi Penamaan Publisher
+[ ] ✅Nama jelas dan konsisten (tidak ada spasi berlebih, kapitalisasi sesuai).
+[ ] ✅Tidak mengandung karakter ilegal atau simbol yang tidak relevan.
+[ ] ✅Unik, tidak duplikat dengan publisher lain.
+[ ] ✅Sesuai aturan/legal, tidak mengandung kata ofensif atau melanggar merek dagang.
+[ ] ✅Panjang nama wajar dan mudah dibaca.

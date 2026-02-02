@@ -1,0 +1,36 @@
+# PENAMAAN ENTITY DI D365CE
+## PENAMAAN ENTITY
+**Custom Entity Naming:**
+  - **Format:** prefix_EntityName
+  - **Prefix:** Gunakan publisher prefix organisasi (contoh: xti_, crXXX_)
+  - **EntityName:** Gunakan PascalCase, deskriptif, dan singular
+  - **Panjang maksimal:** 64 karakter (termasuk prefix)
+
+
+**Contoh:**  
+  - xti_ProjectPhase
+  - xti_ServiceRequest
+  - xti_CustomerFeedback
+
+## Best Practice
+1. Hindari penggunaan singkatan yang tidak jelas
+2. Gunakan nama yang mencerminkan business purpose
+3. Jangan gunakan spasi atau karakter khusus
+4. Hindari penggunaan nama yang terlalu generik (contoh: xti_Data, xti_Record)
+
+
+## Entity Schema Name Validation
+[  ] ✅ Menggunakan publisher prefix yang benar (contoh: xti_, crXXX_)
+[  ] ✅ Entity name menggunakan PascalCase
+[  ] ✅ Entity name dalam bentuk singular (bukan plural)
+[  ] ✅ Tidak mengandung spasi atau karakter khusus
+[  ] ✅ Panjang total tidak melebihi 64 karakter (termasuk prefix)
+[  ] ✅ Nama deskriptif dan mencerminkan business purpose
+[  ] ✅ Tidak menggunakan abbreviations yang tidak standar
+[  ] ✅ Tidak menggunakan nama yang terlalu generik
+
+## Entity Display Name Validation
+[  ] ✅ Display name user-friendly dan mudah dipahami
+[  ] ✅ Konsisten dengan bahasa yang dipilih (Indonesia atau English)
+[  ] ✅ Tidak mengandung prefix di display name
+[  ] ✅ Plural name untuk display name sudah dikonfigurasi dengan benar
