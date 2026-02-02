@@ -50,7 +50,7 @@
 
   <script>
     // load sidebar.html
-    fetch('/sidebar.html')
+    fetch('sidebar.html')
       .then(res => {
         if (!res.ok) throw new Error('Sidebar not found');
         return res.text();
