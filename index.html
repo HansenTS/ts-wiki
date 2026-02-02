@@ -64,29 +64,31 @@
 
   <script>
     // load sidebar.html
-    fetch('sidebar.html')
-      .then(res => {
-        if (!res.ok) throw new Error('Sidebar not found');
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('sidebar-container').innerHTML = html;
-        // aktifkan toggle submenu
-        const menuItems = document.querySelectorAll('.menu-item.toggle');
-        menuItems.forEach(item => {
-          item.addEventListener('click', (e) => {
-            // kalau klik link <a>, jangan toggle
-            if (e.target.tagName.toLowerCase() === 'a') return;
-            // hentikan bubbling supaya parent tidak ikut collapse
-            e.stopPropagation();
-            const submenu = item.querySelector(':scope > .submenu');
-            if (submenu) {
-              submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
-            }
-          });
+  fetch('sidebar.html')
+    .then(res => {
+      if (!res.ok) throw new Error('Sidebar not found');
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
+      // aktifkan toggle submenu
+      const menuItems = document.querySelectorAll('.menu-item.toggle');
+      menuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          // kalau klik link <a>, jangan toggle
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          // hentikan bubbling supaya parent tidak ikut collapse
+          e.stopPropagation();
+          // hanya ambil submenu langsung di bawah item ini
+          const submenu = item.querySelector(':scope > .submenu');
+          if (submenu) {
+            submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+          }
         });
-      })
-      .catch(err => console.error(err));
+      });
+    })
+    .catch(err => console.error(err));
+
   </script>
 </body>
 </html>
