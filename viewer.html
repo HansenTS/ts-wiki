@@ -50,7 +50,7 @@
   const file = params.get("file");
 
   if (file) {
-    fetch("./ts-wiki/penamaan/" + file)
+    fetch("./penamaan/" + file)
       .then(r => r.text())
       .then(text => {
         // parsing markdown-like
@@ -63,7 +63,7 @@
           .replace(/\n/g, "<br>");
 
         const imageFile = file.replace(".txt", ".png");
-        const imageUrl = "./ts-wiki/penamaan/" + imageFile;
+        const imageUrl = "./penamaan/" + imageFile;
 
         // cek apakah gambar ada
         fetch(imageUrl, { method: "HEAD" })
