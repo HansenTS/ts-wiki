@@ -57,6 +57,7 @@
           .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
           .replace(/\*(.*?)\*/gim, "<i>$1</i>")
           .replace(/`(.*?)`/gim, "<code>$1</code>")
+          .replace(/ /g, "&nbsp;")
           .replace(/\n/g, "<br>");
 
         // cek apakah gambar ada
