@@ -42,7 +42,7 @@
 - **Event Naming:** Gunakan Pre/Post + Validation/Create/Update/Delete untuk plugin events
 - **Action Verbs:** Gunakan kata kerja yang jelas untuk business logic classes (Update, Calculate, Validate, Synchronize, dll)
 
-### Checklist Implementasi
+## Checklist Implementasi
 
 [ ]✅Buat folder struktur: EntityClasses/Wrappers, Plugin, EntityClasses/Business
 [ ]✅Dokumentasikan setiap wrapper class dengan XML comments
