@@ -1,0 +1,34 @@
+# STANDARISASI WORKFLOW (POWER AUTOMATE) UNTUK D365CE
+## 1. Struktur Penamaan Workflow:
+- Menggunakan PascalCase untuk module,entity, action
+- Deskripsi harus jelas , tidak diijinkan menggunakan nama generik, seperti TestFlow atau Process1 
+- **Format** :[NAMESPACE].[NAMA PROJECT].[MODULE].[EntityName].[Action]
+   - Contoh : 
+      1. TSINDO.YANA.BSI.Flow.Service.Workorder.SendToDnet
+      2. TSINDO.OVO.Flow.Case.SendEmailCloseCase
+
+
+## Best Practices
+- **Penamaan konsisten:** gunakan format standar [Company].[Solution].[Entity].[Action].[Type].
+- **Deskripsi jelas:** tulis tujuan Workflow/Flow di description, bukan hanya di nama.
+- **Trigger spesifik:** jangan pakai trigger “on update” tanpa filter, supaya tidak boros resource.
+- **Logic sederhana:** pecah Flow besar jadi beberapa Flow kecil, hindari branching berlebihan.
+- **Error handling:** selalu siapkan notifikasi/log jika gagal.
+- **Security:** jalankan dengan akun service minimal privilege, bukan akun personal.
+- **Performance:** gunakan query dengan filter, batch/pagination untuk data besar.
+- **Deployment:** simpan Workflow/Flow di solution, gunakan environment variables untuk konfigurasi.
+- **Versioning:** beri suffix v2, v3 jika ada revisi besar, catat di changelog
+
+## Checklist Implementasi
+[ ]✅Nama sesuai standar dan mudah dipahami
+[ ]✅Deskripsi tujuan Workflow/Flow ditulis
+[ ]✅Trigger jelas dan efisien
+[ ]✅Logic modular, tidak terlalu panjang
+[ ]✅Error handling tersedia
+[ ]✅Security sesuai prinsip least privilege
+[ ]✅Query efisien (filter, batch)
+[ ]✅Workflow/Flow disimpan di solution
+[ ]✅Environment variables dipakai
+[ ]✅Versioning dan changelog terupdate
+
+
