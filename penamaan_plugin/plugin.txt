@@ -1,0 +1,55 @@
+# STANDARISASI PLUGIN UNTUK D365CE
+## 1. Struktur Penamaan Plugin:
+- **Wrapper:** 
+   - Menggunakan PascalCase
+   - menyediakan fungsi dan helper untuk entity tertentu 
+   - Format : Namespace.[NAMAPROJECT].DataAccess.[EntityName].Wrappers
+   - Contoh : 
+      1. TSINDO.YANA.BSI.DataAccess.Wrapper.NewVehicle.cs
+      2. TSINDO.YANA.TI5.DataAccess.Wrapper.Workorder.cs
+      3. TSINDO.OVO.DataAccess.Wrapper.Incident.cs
+
+- **Plugin:(Handler Event Plugin)** 
+   - Menggunakan PascalCase
+   - Nama plugin harus mendeskripsikan fungsi plugin secara jelas, 
+     Harus mencerminkan nama organisasi atau modul utama dan sesuai dengan Event yang dipanggil
+   - Format : Namespace.[NAMAPROJECT].ModulName.EntityName.EventName
+   - Contoh : 
+      1. TSINDO.YANA.BSI.NewVehicle.NewVehicleWholesaleOrder.PostCreate.cs
+      2. TSINDO.YANA.TI5.Service.Workorder.PostCreate.cs
+      3. TSINDO.OVO.Plugin.Contact.PostCreate.cs
+
+- **Business Logic:**
+    - Menggunakan PascalCase
+    - Nama harus bisa merepresentasikan logika bisnis sehingga dapat digunakan kembali oleh plugin lainnya
+    - Format : Namespace.[NAMAPROJECT].[ModulName].Entity.[EntityName].[ProcessName]
+    - Contoh : 
+     1. TSINDO.YANA.BSI.Service.Business.Workorder.CalculateTotalDetail.cs
+     2. TSINDO.OVO.Business.Opportunity.SetWatermark.cs
+
+- **Entity:**
+    - Menggunakan PascalCase
+    - Container hasil generate dari early bound classes, yang merupakan entity dari D365CE
+    - Format : Namespace.[NAMAPROJECT].Entities.[EntityName]
+    - Contoh : 
+     1. TSINDO.YANA.BSI.Entities.Workorder.cs
+     2. TSINDO.OVO.Entities.EntityList.cs
+
+## Best Practices
+- **Konsistensi:** Selalu gunakan PascalCase untuk semua bagian nama
+- **Deskriptif:** Nama harus jelas menggambarkan fungsi dan tujuan kelas
+- **Pemisahan Concerns:** Wrapper untuk abstraksi data, Plugin untuk event handling, Business untuk logika reusable, Entities untuk menampung list entity dari D365CE
+- **Event Naming:** Gunakan Pre/Post + Validation/Create/Update/Delete untuk plugin events
+- **Action Verbs:** Gunakan kata kerja yang jelas untuk business logic classes (Update, Calculate, Validate, Synchronize, dll)
+
+### Checklist Implementasi
+
+[ ]✅Buat folder struktur: EntityClasses/Wrappers, Plugin, EntityClasses/Business
+[ ]✅Dokumentasikan setiap wrapper class dengan XML comments
+[ ]✅Pastikan setiap plugin terdaftar dengan nama yang sesuai konvensi di Plugin Registration Tool
+[ ]✅Review naming convention dengan tim development
+[ ]✅Update existing plugins yang belum mengikuti konvensi baru
+[ ]✅Buat template project untuk mempercepat pembuatan plugin baru
+[ ]✅Tambahkan unit tests untuk setiap business logic class
+[ ]✅Dokumentasikan dependencies antar classes (wrapper, plugin, business logic)
+
