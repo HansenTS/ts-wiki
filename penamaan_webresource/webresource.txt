@@ -63,23 +63,20 @@ TSINDO.YANA.Script.Service.xti_workorder = {
 - **Name (Unique Name):** Otomatis dengan prefix publisher
 
 ## Best Practice
-### Dokumentasi
 
-- Setiap file harus memiliki header comment yang menjelaskan purpose, author, dan date
-- Dokumentasikan setiap fungsi public dengan JSDoc format
-
-### Dependencies
-
+**Dependencies**
 - Library dependencies harus didaftarkan dalam form properties dengan urutan yang benar
 - Gunakan namespace yang konsisten untuk menghindari konflik
 
-### Versioning
+**Versioning**
 
-- Implementasikan version tracking dalam comment header
-- Format: `@version 1.0.0 - YYYY-MM-DD`
+- Implementasikan version tracking saat commit ke bitbucket
+- Format: 'YYYY-MM-DD_[No_Jira]_[@version]_[shortdesc]'
+- Contoh: 
+    1. '2026-02-03_[BSI_108]_[1.0.0.0]_addnewvalidation'
+    2. '2026-02-03_[TI5-87]_[1.0.0.0]_financesimulation'
 
-### Error Handling
-
+## Error Handling
 - Selalu gunakan try-catch blocks untuk fungsi critical
 - Log errors dengan informasi yang cukup untuk debugging
 
@@ -87,9 +84,8 @@ TSINDO.YANA.Script.Service.xti_workorder = {
 ## Checklist Validasi Penamaan Solution
 [ ]✅Buat namespace dengan format `CompanyName.ModuleName.EntityName`
 [ ]✅Gunakan naming convention yang konsisten untuk file web resource
-[ ]✅Tambahkan header documentation dengan file overview
-[ ]✅Dokumentasikan semua public functions dengan JSDoc
 [ ]✅Implementasikan error handling dengan try-catch
 [ ]✅Test di development environment sebelum deploy
-[ ]✅Update version number dan changelog
+[ ]✅Update version number dan changelog saat push ke bit bucket 
+[ ]✅Check ada fungsi yang sudah deprecated / tidak
 [ ]✅Review code dengan tim sebelum production deployment
