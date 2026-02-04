@@ -36,10 +36,14 @@
                           position: relative; margin-bottom: 5px; }
     .sidebar .menu-item:hover { background-color: #e2e6ea; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-color: #007bff; }
     .sidebar .submenu { display: none; padding-left: 20px; overflow: hidden; transition: max-height 0.3s ease; }
-    .sidebar .submenu-item { padding: 8px 15px; background: none; border: none; margin: 3px 0;
-                              color: #333; cursor: pointer; transition: color 0.3s ease; }
-    .sidebar .submenu-item:hover { color: #007bff; background: none; }
+    .sidebar .submenu-item { padding: 8px 15px; background: none; border-radius: 4px; margin: 3px 0;
+                              color: #333; cursor: pointer; transition: all 0.3s ease; }
+    .sidebar .submenu-item:hover { color: #007bff; background-color: #e2e6ea; }
+    
+    /* highlight aktif */
     .sidebar .menu-item.active { background-color: #007bff; color: #fff; }
+    .sidebar .submenu-item.active { background-color: #007bff; color: #fff; }
+
     .sidebar .submenu .submenu { padding-left: 20px; }
     @media (max-width: 768px) { 
       .sidebar { width: 200px; } 
@@ -56,7 +60,7 @@
     <h1>Knowledge Base</h1>
   </header>
   <div class="container">
-    <div id="sidebar-container"></div>
+    <div id="sidebar-container" class="sidebar"></div>
     <main class="main-content">
       <iframe name="content-frame"></iframe>
     </main>
@@ -64,31 +68,44 @@
 
   <script>
     // load sidebar.html
-  fetch('sidebar.html')
-    .then(res => {
-      if (!res.ok) throw new Error('Sidebar not found');
-      return res.text();
-    })
-    .then(html => {
-      document.getElementById('sidebar-container').innerHTML = html;
-      // aktifkan toggle submenu
-      const menuItems = document.querySelectorAll('.menu-item.toggle');
-      menuItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-          // kalau klik link <a>, jangan toggle
-          if (e.target.tagName.toLowerCase() === 'a') return;
-          // hentikan bubbling supaya parent tidak ikut collapse
-          e.stopPropagation();
-          // hanya ambil submenu langsung di bawah item ini
-          const submenu = item.querySelector(':scope > .submenu');
-          if (submenu) {
-            submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
-          }
-        });
-      });
-    })
-    .catch(err => console.error(err));
+    fetch('sidebar.html')
+      .then(res => {
+        if (!res.ok) throw new Error('Sidebar not found');
+        return res.text();
+      })
+      .then(html => {
+        document.getElementById('sidebar-container').innerHTML = html;
 
+        // toggle submenu untuk menu utama
+        const menuItems = document.querySelectorAll('.menu-item.toggle');
+        menuItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            if (e.target.tagName.toLowerCase() === 'a') return;
+            e.stopPropagation();
+
+            // hapus active dari semua menu-item
+            menuItems.forEach(mi => mi.classList.remove('active'));
+            item.classList.add('active');
+
+            const submenu = item.querySelector(':scope > .submenu');
+            if (submenu) {
+              submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+            }
+          });
+        });
+
+        // highlight submenu-item saat diklik
+        const submenuItems = document.querySelectorAll('.submenu-item');
+        submenuItems.forEach(sub => {
+          sub.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // hapus active dari semua submenu-item
+            submenuItems.forEach(si => si.classList.remove('active'));
+            sub.classList.add('active');
+          });
+        });
+      })
+      .catch(err => console.error(err));
   </script>
 </body>
 </html>
