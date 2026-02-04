@@ -1,0 +1,84 @@
+# STANDARISASI SSRS REPORT TRANSAKSI UNTUK D365CE
+
+## Dokumen Transaksi (Invoice, Kwitansi, Kontrak)
+- Digunakan sebagai dokumen resmi untuk customer, sehingga harus formal, jelas, dan mudah dicetak.
+- **Font Type:** Arial atau Times New Roman (lebih formal, standar dokumen resmi)
+
+- **Header Section (judul dokumen, misalnya “INVOICE”)**
+   - Font Size: 16 pt
+   - Bold: Ya (judul dokumen wajib menonjol)
+   - Italic: Tidak
+- **Sub-header (informasi perusahaan, alamat, nomor dokumen)**
+   - Font Size: 11–12 pt
+   - Bold: Nama perusahaan, nomor dokumen
+   - Italic: Bisa dipakai untuk tagline atau catatan kecil
+- **Column Header (tabel item transaksi)**
+   - Font Size: 11 pt
+   - Bold: Ya (agar jelas membedakan dari detail item)
+   - Italic: Tidak
+- **Detail Data (isi tabel item)**
+   - Font Size: 10 pt
+   - Bold: Hanya untuk baris total (misalnya “TOTAL BAYAR”)
+   - Italic: Tidak digunakan
+- **Footer (catatan, syarat & ketentuan, tanda tangan)**
+   - Font Size: 9–10 pt
+   - Bold: Tidak (kecuali kata “Catatan” atau “Terms & Conditions”)
+   - Italic: Bisa dipakai untuk disclaimer atau catatan hukum
+
+
+## Elemen Visual & Branding
+**Logo Perusahaan**
+- Selalu ambil dari Themes (centralized asset) agar konsisten di semua report.
+- **Posisi:** kiri atas header report/dokumen.
+- **Ukuran:** proporsional, jangan lebih dari 10–15% lebar halaman.
+- **Warna & Style:**
+   - Gunakan warna dari corporate theme (misalnya biru/abu-abu untuk otomotif).
+   - Hindari warna mencolok untuk background tabel; gunakan light gray untuk highlight.
+
+## Format Data
+**Tanggal (Date)**
+  - Format: DD-MMM-YYYY (contoh: 04-Feb-2026).
+  - Konsisten di semua report, baik analitik maupun transaksi.
+  - **Untuk jam (jika diperlukan):** DD-MMM-YYYY HH:mm.
+
+**Angka (Number)**
+  - Format umum: #,### (contoh: 12,345).
+  - Untuk nilai uang: #,###.00 + simbol mata uang (Rp).
+  - Persentase: ##.##%.
+  - Hindari angka tanpa pemisah ribuan.
+
+## Alignment
+**Header Title:** Center alignment, Bold.
+**Column Header:** Center alignment (agar tabel rapi).
+**Detail Data:**
+  - Text: Left alignment.
+  - Number/Amount: Right alignment.
+  - Date: Center alignment.
+  - Footer/Disclaimer: Left alignment, italic jika catatan hukum.
+
+## Font & Ukuran (Standar Umum)
+**Font Type:**
+  - Report Analitik → Segoe UI / Calibri (modern, clean).
+  - Dokumen Transaksi → Arial / Times New Roman (formal, resmi).
+**Ukuran Font:**
+  - Judul Report/Dokumen: 14–16 pt, Bold.
+  - Sub-header (info perusahaan, nomor dokumen): 11–12 pt.
+**Column Header:** 11 pt, Bold.
+**Detail Data:** 10 pt.
+**Footer/Disclaimer:** 9–10 pt, italic jika catatan.
+
+## Konsistensi Layout
+**Margin:** 1 inch (2.54 cm) di semua sisi.
+**Page Orientation:**
+ - Analitik → Landscape (jika tabel lebar).
+ - Transaksi → Portrait (lebih formal).
+**Pagination:**
+ - Tambahkan nomor halaman di footer: “Page X of Y”.
+**Sectioning:**
+ - Header → Logo + Judul.
+ - Body → Data utama.
+ - Footer → Catatan, tanda tangan, atau disclaimer.
+
+
+
+
