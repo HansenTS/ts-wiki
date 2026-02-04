@@ -2,7 +2,7 @@
 
 ## Report Analitik (Revenue per Product, Detail Stock Movement)
 **Digunakan untuk analisis manajemen, sehingga harus rapi, profesional, dan mudah dibaca.**
-- **Font Type:** Segoe UI atau Calibri (modern, clean, corporate look)
+- **Font Type:** Calibri (modern, clean, corporate look)
 - **Header Section**
    - **Font Size:** 16 pt
    - **Bold:** Ya (untuk judul utama laporan, misalnya Revenue per Product Report)

@@ -2,7 +2,7 @@
 
 ## Dokumen Transaksi (Invoice, Kwitansi, Kontrak)
 - Digunakan sebagai dokumen resmi untuk customer, sehingga harus formal, jelas, dan mudah dicetak.
-- **Font Type:** Arial atau Times New Roman (lebih formal, standar dokumen resmi)
+- **Font Type:** Arial (lebih formal, standar dokumen resmi)
 
 - **Header Section (judul dokumen, misalnya “INVOICE”)**
    - Font Size: 16 pt
