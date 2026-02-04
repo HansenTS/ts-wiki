@@ -4,11 +4,11 @@
 **Digunakan untuk analisis manajemen, sehingga harus rapi, profesional, dan mudah dibaca.**
 - **Font Type:** Segoe UI atau Calibri (modern, clean, corporate look)
 - **Header Section**
-   - **Font Size:** 14 pt
+   - **Font Size:** 16 pt
    - **Bold:** Ya (untuk judul utama laporan, misalnya Revenue per Product Report)
    - **Italic:** Tidak digunakan (kecuali untuk catatan atau disclaimer kecil)
 - **Column Header (tabel analitik)**
-   - **Font Size:** 11 pt
+   - **Font Size:** 12 pt
    - **Bold:** Ya (agar membedakan dari detail data)
    - **Italic:** Tidak
 - **Detail Data (isi tabel)**
