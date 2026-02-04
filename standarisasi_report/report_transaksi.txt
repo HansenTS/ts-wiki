@@ -1,4 +1,4 @@
-# STANDARISASI SSRS REPORT TRANSAKSI UNTUK D365CE
+# STANDARISASI SSRS REPORT **TRANSAKSI** UNTUK D365CE
 
 ## Dokumen Transaksi (Invoice, Kwitansi, Kontrak)
 - Digunakan sebagai dokumen resmi untuk customer, sehingga harus formal, jelas, dan mudah dicetak.
@@ -79,6 +79,16 @@
  - Body → Data utama.
  - Footer → Catatan, tanda tangan, atau disclaimer.
 
-
+## Checklist Standarisasi SSRS
+[ ]✅Logo dari Themes, posisi kiri atas.
+[ ]✅Format tanggal: DD-MMM-YYYY.
+[ ]✅Format angka: ribuan dengan koma, uang dengan dua desimal.
+[ ]✅Alignment: text left, number right, date center.
+[ ]✅Font: Segoe UI/Calibri (analitik), Arial/Times New Roman (transaksi).
+[ ]✅Ukuran font: 14–16 pt judul, 11 pt header, 10 pt detail, 9–10 pt footer.
+[ ]✅Bold: judul, column header, total.
+[ ]✅Italic: disclaimer/catatan hukum.
+[ ]✅Margin standar 1 inch, pagination aktif.
+[ ]✅Layout sesuai tipe report (analitik → landscape, transaksi → portrait).
 
 
