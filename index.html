@@ -73,33 +73,48 @@
   </div>
 
   <script>
-    fetch('sidebar.html')
-      .then(res => {
-        if (!res.ok) throw new Error('Sidebar not found');
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('sidebar-container').innerHTML = html;
+  fetch('sidebar.html')
+    .then(res => {
+      if (!res.ok) throw new Error('Sidebar not found');
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById('sidebar-container').innerHTML = html;
 
-        // Semua item yang punya submenu bisa di-toggle
-        const toggles = document.querySelectorAll('.menu-item, .submenu-item');
-        toggles.forEach(item => {
-          item.addEventListener('click', (e) => {
-            if (e.target.tagName.toLowerCase() === 'a') return;
-            e.stopPropagation();
+      // cari semua menu-item yang bisa di-toggle
+      const toggles = document.querySelectorAll('.menu-item.toggle');
+      toggles.forEach(item => {
+        item.addEventListener('click', (e) => {
+          // jangan trigger kalau klik link <a>
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          e.stopPropagation();
 
-            // toggle active
-            item.classList.toggle('active');
+          // toggle active
+          item.classList.toggle('active');
 
-            // cari submenu langsung di bawah item ini
-            const submenu = item.querySelector(':scope > .submenu');
-            if (submenu) {
-              submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+          // ambil semua child langsung di dalam item ini
+          const children = item.querySelectorAll(':scope > .menu-item.toggle, :scope > .submenu');
+          children.forEach(child => {
+            if (child.style.display === 'block') {
+              child.style.display = 'none';
+            } else {
+              child.style.display = 'block';
             }
           });
         });
-      })
-      .catch(err => console.error(err));
-  </script>
+      });
+
+      // highlight submenu-item saat diklik
+      const submenuItems = document.querySelectorAll('.submenu-item');
+      submenuItems.forEach(sub => {
+        sub.addEventListener('click', (e) => {
+          e.stopPropagation();
+          submenuItems.forEach(si => si.classList.remove('active'));
+          sub.classList.add('active');
+        });
+      });
+    })
+    .catch(err => console.error(err));
+</script>
 </body>
 </html>
