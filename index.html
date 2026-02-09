@@ -40,18 +40,15 @@
                               color: #333; cursor: pointer; transition: all 0.3s ease; }
     .sidebar .submenu-item:hover { color: #007bff; background-color: #e2e6ea; }
     
-    /* highlight aktif */
     .sidebar .menu-item.active {
-      background-color: #00bcd4; /* teal kekinian */
+      background-color: #00bcd4;
       color: #fff;
-      border-left: 4px solid #ff4081; /* aksen pink coral */
+      border-left: 4px solid #ff4081;
     }
-
     .sidebar .submenu-item.active {
-      background-color: #ff9800; /* orange modern */
+      background-color: #ff9800;
       color: #fff;
     }
-
 
     .sidebar .submenu .submenu { padding-left: 20px; }
     @media (max-width: 768px) { 
@@ -76,7 +73,6 @@
   </div>
 
   <script>
-    // load sidebar.html
     fetch('sidebar.html')
       .then(res => {
         if (!res.ok) throw new Error('Sidebar not found');
@@ -85,32 +81,21 @@
       .then(html => {
         document.getElementById('sidebar-container').innerHTML = html;
 
-        // toggle submenu untuk menu utama
-        const menuItems = document.querySelectorAll('.menu-item.toggle');
-        menuItems.forEach(item => {
+        // Semua item yang punya submenu bisa di-toggle
+        const toggles = document.querySelectorAll('.menu-item, .submenu-item');
+        toggles.forEach(item => {
           item.addEventListener('click', (e) => {
             if (e.target.tagName.toLowerCase() === 'a') return;
             e.stopPropagation();
 
-            // hapus active dari semua menu-item
-            menuItems.forEach(mi => mi.classList.remove('active'));
-            item.classList.add('active');
+            // toggle active
+            item.classList.toggle('active');
 
+            // cari submenu langsung di bawah item ini
             const submenu = item.querySelector(':scope > .submenu');
             if (submenu) {
               submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
             }
-          });
-        });
-
-        // highlight submenu-item saat diklik
-        const submenuItems = document.querySelectorAll('.submenu-item');
-        submenuItems.forEach(sub => {
-          sub.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // hapus active dari semua submenu-item
-            submenuItems.forEach(si => si.classList.remove('active'));
-            sub.classList.add('active');
           });
         });
       })
