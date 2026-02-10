@@ -1,7 +1,5 @@
 # STANDARISASI SSRS REPORT UNTUK D365CE
 
-##
-
 ## Elemen Visual & Branding
 **Logo Perusahaan**
 - Selalu ambil dari Themes (centralized asset) agar konsisten di semua report.
