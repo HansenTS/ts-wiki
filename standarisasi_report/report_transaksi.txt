@@ -35,6 +35,13 @@
    - Gunakan warna dari corporate theme (misalnya biru/abu-abu untuk otomotif).
    - Hindari warna mencolok untuk background tabel; gunakan light gray untuk highlight.
 
+## Parameter input  
+**(Date From – Date To)*
+  - Posisi Sejajar : parameter tanggal harus berdampingan (misal : From di kiri, To di kanan)
+  - Label konsisten : gunakan format label yang sama, "Tanggal Mulai" - "Tanggal Selesai" atau "From Date" - "To Date"
+  - Format Tanggal seragam : dd/MM/YYYY (untuk indo), MM/dd/YYYY (untuk luar indo)
+
+
 ## Format Data
 **Tanggal (Date)**
   - Format: DD-MMM-YYYY (contoh: 04-Feb-2026).
@@ -78,6 +85,11 @@
  - Header → Logo + Judul.
  - Body → Data utama.
  - Footer → Catatan, tanda tangan, atau disclaimer.
+
+## Warna & Efisiensi Cetak
+  - **Minim warna blok :** hindari background warna 
+  - **Highlight dengan garis tipis :** gunakan border tipis atau bold text untuk pemisahan, bukan di warna mencolok
+
 
 ## Checklist Standarisasi SSRS
 [ ]✅Logo dari Themes, posisi kiri atas.
