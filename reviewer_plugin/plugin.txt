@@ -1,0 +1,46 @@
+# Checklist Review Plugin 
+
+## General Check 
+[ ]✅Buat folder struktur: EntityClasses/Wrappers, Plugin, EntityClasses/Business
+[ ]✅Dokumentasikan setiap wrapper class dengan XML comments
+[ ]✅Pastikan setiap plugin terdaftar dengan nama yang sesuai konvensi di Plugin Registration Tool
+[ ]✅Review naming convention dengan tim development
+[ ]✅Update existing plugins yang belum mengikuti konvensi baru
+[ ]✅Buat template project untuk mempercepat pembuatan plugin baru
+[ ]✅Tambahkan unit tests untuk setiap business logic class
+[ ]✅Dokumentasikan dependencies antar classes (wrapper, plugin, business logic)
+
+
+## Plugin Registration
+[ ]✅Step Configuration sesuai kebutuhan | Sample : ✓: Stage=20 (PreValidation), Mode=Synchronous
+[ ]✅Filtering Attribute di register dengan benar |  Sample : ✓: FilteringAttribute : xts_status, xts_baseamount
+
+## Context & tracking 
+[ ]✅Menggunakan ITracingService untuk logging | Sample : ✓:tracingService.Trace("Memulai proses update account");
+[ ]✅Tidak throw exception untuk alur bisnis normal  | Sample : ✗: Throw exception untuk validasi bisnis biasa
+[ ]✅Exception handling |
+    Sample : try {
+                  service.Update(entity);
+              } catch (Exception ex) {
+                tracingService.Trace("Update failed: " + ex.Message);
+                throw;
+              }
+
+## Data Access
+[ ]✅Menggunakan Early Bound entities jika mungkin | Sample : ✓: Account account = new Account();
+[ ]✅Tidak melakukan query berlebihan dalam loop | Sample : ✗: for each record { service.Retrieve(...) }
+[ ]✅Menggunakan ColumnSet yang selektif	 |
+     Sample : ✓: new ColumnSet("name", "accountid")
+              ✗: new ColumnSet(true)
+
+## Transaction & State
+[ ]✅Handling entity state dengan benar | Sample: ✓: if (context.MessageName == "Update")
+[ ]✅Mengambil pre-image jika diperlukan | Sample: ✓: var preImage = context.PreEntityImages["preImage"];
+
+## Business Logic
+[ ]✅Tidak ada hardcoded GUID/ID | Sample: ✗: var userId = new Guid("123..."); ✓: Ambil dari config
+[ ]✅Logika bisnis sesuai requirement 
+
+
+
+

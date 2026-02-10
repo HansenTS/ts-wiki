@@ -1,0 +1,46 @@
+# Checklist Review JavaScript
+
+## General Check 
+[ ]✅Buat namespace dengan format `CompanyName.ModuleName.EntityName`
+[ ]✅Gunakan naming convention yang konsisten untuk file web resource
+[ ]✅Implementasikan error handling dengan try-catch
+[ ]✅Test di development environment sebelum deploy
+[ ]✅Update version number dan changelog saat push ke bit bucket 
+[ ]✅Check ada fungsi yang sudah deprecated / tidak
+[ ]✅Review code dengan tim sebelum production deployment
+
+## Code Quality
+[ ]✅Nama variabel/fungsi deskriptif.(camelCase) | Sample : ✓: calculateTotalPrice() ✗: calc()
+[ ]✅Konsistensi formatting |  Sample : ✓: if (condition) { }
+[ ]✅Tidak ada kode yang dikomentari tidak perlu | Sample :  ✗: // oldFunction(); // ini tidak dipakai lagi
+[ ]✅Komentar yang jelas untuk logika kompleks | Sample : // Validasi format email dengan regex kompleks
+
+## Error Handling
+[ ]✅Try-catch untuk operasi berisiko | 
+    Sample : try {JSON.parse(data)} 
+             catch(error)
+                  {console.error('Parse error:', error); }
+[ ]✅Validasi input parameter |
+    sample : if (!userId || typeof userId !== 'string') return;
+[ ]✅Handling null/undefined dengan aman |
+    sample :  ✓: const name = user?.profile?.name ?? 'Default';
+
+## Perfomance 
+[ ]✅Tidak ada infinite loop potensial | Sample : ✗: while (true) { ... }
+[ ]✅Debounce/throttle untuk event handler | Sample : ✓: window.addEventListener('resize', debounce(handleResize, 250));
+[ ]✅Menggunakan event delegation jika banyak elemen | Sample : ✓: document.body.addEventListener('click', (e) => { if(e.target.matches('.btn')) {...}});
+
+## Security 
+[ ]✅Sanitasi input untuk mencegah XSS | 
+   Sample :✓: element.textContent = userInput;
+           ✗: element.innerHTML = userInput;
+[ ]✅Tidak ada data sensitif di console.log |
+   Sample : ✗: console.log('Password:', password);
+[ ]✅Validasi origin untuk postMessage |
+   Sample : if (event.origin !== 'https://domain.com') return;
+
+Best Practices
+[ ]✅Tidak menggunakan eval()
+   Sample : ✗: eval('result = ' + userInput);
+[ ]✅Menggunakan === daripada ==
+   Sample : ✓: if (status === 'active')
