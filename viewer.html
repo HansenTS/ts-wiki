@@ -29,7 +29,7 @@
     font-family: inherit;
   }
   th, td {
-    border: 1px solid #a2a9b1;   /* garis tipis abu-abu */
+    border: 1px solid #a2a9b1;
     padding: 8px 12px;
     text-align: left;
     vertical-align: top;
@@ -37,10 +37,18 @@
   th {
     background-color: #f0f0f0;
     font-weight: bold;
-    border-bottom: 2px solid #a2a9b1; /* garis lebih tebal di header */
+    border-bottom: 2px solid #a2a9b1;
   }
   tr:nth-child(even) {
-    background-color: #f9f9f9;   /* zebra striping */
+    background-color: #f9f9f9;
+  }
+
+  ul, ol {
+    margin: 0 0 1em 2em;
+    padding: 0;
+  }
+  li {
+    margin: 0.3em 0;
   }
 
   .thumb {
@@ -63,13 +71,11 @@
 <script>
   function parseMarkdownTable(text) {
     const tableRegex = /\|(.+)\|\n\|([-:\s|]+)\|\n((?:\|.*\|\n?)*)/g;
-
     return text.replace(tableRegex, function(match, header, separator, rows) {
       const headers = header.split('|').map(h => h.trim()).filter(h => h);
       let html = '<table><thead><tr>';
       headers.forEach(h => { html += `<th>${h}</th>`; });
       html += '</tr></thead><tbody>';
-
       const rowList = rows.trim().split('\n');
       rowList.forEach(row => {
         if (row.trim()) {
@@ -81,10 +87,17 @@
           }
         }
       });
-
       html += '</tbody></table>';
       return html;
     });
+  }
+
+  function parseMarkdownLists(text) {
+    // Ordered list
+    text = text.replace(/^\d+\.\s+(.*)$/gim, "<ol><li>$1</li></ol>");
+    // Unordered list
+    text = text.replace(/^- (.*)$/gim, "<ul><li>$1</li></ul>");
+    return text;
   }
 
   const params = new URLSearchParams(window.location.search);
@@ -106,18 +119,13 @@
           .replace(/\*(.*?)\*/gim, "<i>$1</i>")
           .replace(/`(.*?)`/gim, "<code>$1</code>");
 
-        // parse ordered list (angka di depan, misalnya "1. ...")
-        html = html.replace(/^\d+\.\s+(.*)$/gim, "<ol><li>$1</li></ol>");
+        // parse list
+        html = parseMarkdownLists(html);
 
-        // parse unordered list (bullet "- ...")
-        html = html.replace(/^- (.*)$/gim, "<ul><li>$1</li></ul>");
-
-
-
-        // parse tabel dulu
+        // parse tabel
         html = parseMarkdownTable(html);
 
-        // baru ganti newline jadi <br>
+        // newline jadi <br> (hati-hati agar tidak merusak list/tabel)
         html = html.replace(/\n/g, "<br>");
 
         // cek gambar
