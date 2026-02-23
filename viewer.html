@@ -33,15 +33,78 @@
     background: #f9f9f9;
     padding: 3px;
   }
+  
+  /* Style untuk tabel */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+  }
+  th, td {
+    border: 1px solid #a2a9b1;
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
 </style>
 </head>
 <body>
 <div id="content">Memuat...</div>
 <script>
+  function parseMarkdownTable(markdown) {
+    // Cari pola tabel Markdown
+    const tableRegex = /\|(.+)\|\s*\n\|([-\s:|]+)\|\s*\n((?:\|.+\|\s*\n?)*)/g;
+    
+    return markdown.replace(tableRegex, function(match, headerRow, separatorRow, bodyRows) {
+      // Parse header
+      const headers = headerRow.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
+      
+      // Parse alignment dari separator row
+      const separators = separatorRow.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
+      const alignments = separators.map(sep => {
+        if (sep.startsWith(':') && sep.endsWith(':')) return 'center';
+        if (sep.endsWith(':')) return 'right';
+        if (sep.startsWith(':')) return 'left';
+        return 'left';
+      });
+      
+      // Parse body rows
+      const rows = bodyRows.trim().split('\n').map(row => {
+        return row.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
+      });
+      
+      // Buat HTML table
+      let html = '<table>\n<thead>\n<tr>';
+      headers.forEach((header, i) => {
+        html += `<th align="${alignments[i] || 'left'}">${header}</th>`;
+      });
+      html += '</tr>\n</thead>\n<tbody>\n';
+      
+      rows.forEach(row => {
+        if (row.length > 0) {
+          html += '<tr>';
+          row.forEach((cell, i) => {
+            html += `<td align="${alignments[i] || 'left'}">${cell}</td>`;
+          });
+          html += '</tr>\n';
+        }
+      });
+      
+      html += '</tbody>\n</table>';
+      return html;
+    });
+  }
+
   const params = new URLSearchParams(window.location.search);
   const file   = params.get("file");
-  const folder = params.get("folder") || "penamaan_metadata"; 
-  // default ke penamaan_metadata kalau tidak ada parameter folder
+  const folder = params.get("folder") || "penamaan_metadata";
 
   if (file) {
     const fileUrl  = folder + "/" + file;
@@ -50,17 +113,33 @@
     fetch(fileUrl)
       .then(r => r.text())
       .then(text => {
-        // parsing markdown-like
+        // Parse markdown
         let html = text
-          .replace(/^# (.*$)/m, "<h1>$1</h1>")
-          .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+          .replace(/^# (.*$)/gm, "<h1>$1</h1>")
+          .replace(/^## (.*$)/gm, "<h2>$1</h2>")
           .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
-          .replace(/\*(.*?)\*/gim, "<i>$1</i>")
+          .replace(/\*(.*?)\*\*/gim, "<i>$1</i>")
           .replace(/`(.*?)`/gim, "<code>$1</code>")
-          .replace(/ /g, "&nbsp;")
-          .replace(/\n/g, "<br>");
+          .replace(/^-\*\*(.*?)\*\*/gm, "<p><strong>$1</strong></p>"); // Handle ** di awal line
+        
+        // Parse tabel Markdown
+        html = parseMarkdownTable(html);
+        
+        // Handle line breaks untuk yang bukan tabel
+        const lines = html.split('\n');
+        html = lines.map(line => {
+          if (!line.trim().startsWith('<table>') && !line.trim().startsWith('</table>') && 
+              !line.trim().startsWith('<thead>') && !line.trim().startsWith('</thead>') &&
+              !line.trim().startsWith('<tbody>') && !line.trim().startsWith('</tbody>') &&
+              !line.trim().startsWith('<tr>') && !line.trim().startsWith('</tr>') &&
+              !line.trim().startsWith('<th') && !line.trim().startsWith('</th>') &&
+              !line.trim().startsWith('<td')) {
+            return line + '<br>';
+          }
+          return line;
+        }).join('');
 
-        // cek apakah gambar ada
+        // Cek apakah gambar ada
         fetch(imageUrl, { method: "HEAD" })
           .then(res => {
             if (res.ok) {
