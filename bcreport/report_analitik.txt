@@ -30,7 +30,7 @@
    - Hindari warna mencolok untuk background tabel; gunakan light gray untuk highlight.
 
 ## Parameter input  
-**(Date From – Date To)*
+**(Date From – Date To)**
   - Posisi Sejajar : parameter tanggal harus berdampingan (misal : From di kiri, To di kanan)
   - Label konsisten : gunakan format label yang sama, "Tanggal Mulai" - "Tanggal Selesai" atau "From Date" - "To Date"
   - Format Tanggal seragam : dd/MM/YYYY (untuk indo), MM/dd/YYYY (untuk luar indo)
