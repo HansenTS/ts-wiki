@@ -21,7 +21,7 @@
   #content { overflow: hidden; }
   #content::after { content: ""; display: block; clear: both; }
 
-  /* Style untuk tabel */
+  /* Style tabel */
   table {
     border-collapse: collapse;
     width: 100%;
@@ -43,7 +43,7 @@
     background-color: #f9f9f9;
   }
 
-  ul, ol {
+  ul {
     margin: 0 0 1em 2em;
     padding: 0;
   }
@@ -92,11 +92,11 @@
     });
   }
 
-  function parseMarkdownLists(text) {
-    // Ordered list
-    text = text.replace(/^\d+\.\s+(.*)$/gim, "<ol><li>$1</li></ol>");
-    // Unordered list
-    text = text.replace(/^- (.*)$/gim, "<ul><li>$1</li></ul>");
+  function parseMarkdownBullets(text) {
+    // ubah baris yang diawali "-" jadi <li>
+    text = text.replace(/^- (.*)$/gm, "<li>$1</li>");
+    // gabungkan <li> berurutan jadi <ul>
+    text = text.replace(/(<li>.*<\/li>(?:\s*))+?/gm, match => "<ul>" + match + "</ul>");
     return text;
   }
 
@@ -114,18 +114,18 @@
         // parsing markdown dasar
         let html = text
           .replace(/^# (.*$)/m, "<h1>$1</h1>")
-          .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-          .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
-          .replace(/\*(.*?)\*/gim, "<i>$1</i>")
-          .replace(/`(.*?)`/gim, "<code>$1</code>");
+          .replace(/^## (.*$)/gm, "<h2>$1</h2>")
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+          .replace(/\*(.*?)\*/g, "<i>$1</i>")
+          .replace(/`(.*?)`/g, "<code>$1</code>");
 
-        // parse list
-        html = parseMarkdownLists(html);
+        // parse bullet list (- item)
+        html = parseMarkdownBullets(html);
 
         // parse tabel
         html = parseMarkdownTable(html);
 
-        // newline jadi <br> (hati-hati agar tidak merusak list/tabel)
+        // newline jadi <br>
         html = html.replace(/\n/g, "<br>");
 
         // cek gambar
