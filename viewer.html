@@ -20,6 +20,29 @@
   }
   #content { overflow: hidden; }
   #content::after { content: ""; display: block; clear: both; }
+
+  /* Style untuk tabel */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-family: inherit;
+  }
+  th, td {
+    border: 1px solid #a2a9b1;   /* garis tipis abu-abu */
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-bottom: 2px solid #a2a9b1; /* garis lebih tebal di header */
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;   /* zebra striping */
+  }
+
   .thumb {
     float: right;
     margin: 0 40px 15px 15px;
