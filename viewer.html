@@ -43,14 +43,6 @@
     background-color: #f9f9f9;
   }
 
-  ul {
-    margin: 0 0 1em 1.5em; /* indentasi wajar */
-    padding: 0;
-  }
-  li {
-    margin: 0.3em 0;
-  }
-
   .thumb {
     float: right;
     margin: 0 40px 15px 15px;
@@ -92,14 +84,6 @@
     });
   }
 
-  function parseMarkdownBullets(text) {
-    // ubah baris yang diawali "-" jadi <li>
-    text = text.replace(/^- (.*)$/gm, "<li>$1</li>");
-    // gabungkan <li> berurutan jadi <ul>
-    text = text.replace(/(<li>.*<\/li>(?:\s*))+?/gm, match => "<ul>" + match + "</ul>");
-    return text;
-  }
-
   const params = new URLSearchParams(window.location.search);
   const file   = params.get("file");
   const folder = params.get("folder") || "penamaan_metadata";
@@ -119,31 +103,29 @@
           .replace(/\*(.*?)\*/g, "<i>$1</i>")
           .replace(/`(.*?)`/g, "<code>$1</code>");
 
-        // parse bullet list (- item)
-        html = parseMarkdownBullets(html);
-
         // parse tabel
         html = parseMarkdownTable(html);
 
-        // newline jadi <br>
-        html = html.replace(/\n/g, "<br>");
+        // tampilkan dengan <pre> agar spasi/indentasi asli tetap ada
+        document.getElementById("content").innerHTML = "<pre>" + html + "</pre>";
 
         // cek gambar
         fetch(imageUrl, { method: "HEAD" })
           .then(res => {
             if (res.ok) {
-              html = html.replace(/<h1>(.*?)<\/h1>/, (match, p1) => {
-                return `<h1>${p1}</h1>
-                        <div class="thumb">
-                          <img src="${imageUrl}" alt="Gambar terkait">
-                        </div>`;
-              });
+              document.getElementById("content").innerHTML =
+                document.getElementById("content").innerHTML.replace(
+                  /<h1>(.*?)<\/h1>/,
+                  (match, p1) => {
+                    return `<h1>${p1}</h1>
+                            <div class="thumb">
+                              <img src="${imageUrl}" alt="Gambar terkait">
+                            </div>`;
+                  }
+                );
             }
-            document.getElementById("content").innerHTML = html;
           })
-          .catch(() => {
-            document.getElementById("content").innerHTML = html;
-          });
+          .catch(() => {});
       })
       .catch(() => {
         document.getElementById("content").innerHTML = "File tidak ditemukan.";
