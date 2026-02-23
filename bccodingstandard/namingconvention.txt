@@ -94,15 +94,16 @@
         Error('Customer tidak ditemukan'); // tidak translatable
 
 -**❌ Hindari : **
-    | Anti-Pattern                   | Kenapa                  | Solusi                                 |
-    |--------------------------------|-------------------------|----------------------------------------|
-    | CALCFIELDS di dalam loop       | Sangat lambat           | Hitung di luar loop atau gunakan FlowField |
-    | Hardcoded string               | Tidak translatable      | Gunakan Label                          |
-    | Magic number                   | Tidak readable          | Gunakan Enum atau Constant             |
-    | Logic di Page trigger          | Sulit di-test & reuse   | Pindahkan ke Codeunit                  |
-    | Find('-')                      | Deprecated style        | Gunakan FindSet() / FindFirst()        |
-    | Global variable berlebihan     | Side effect tak terduga | Gunakan parameter                      |
-    | Commit() sembarangan           | Bisa corrupt transaction| Hanya di titik yang tepat              |
+| Anti-Pattern | Kenapa | Solusi |
+|---|---|---|
+| CALCFIELDS di dalam loop | Sangat lambat | Hitung di luar loop atau gunakan FlowField |
+| Hardcoded string | Tidak translatable | Gunakan Label |
+| Magic number | Tidak readable | Gunakan Enum atau Constant |
+| Logic di Page trigger | Sulit di-test & reuse | Pindahkan ke Codeunit |
+| Find('-') | Deprecated style | Gunakan FindSet() / FindFirst() |
+| Global variable berlebihan | Side effect tak terduga | Gunakan parameter |
+| Commit() sembarangan | Bisa corrupt transaction | Hanya di titik yang tepat |
+
 
 ## Best Practices
 - **Konsistensi:** Selalu gunakan PascalCase untuk semua bagian nama

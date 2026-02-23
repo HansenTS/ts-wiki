@@ -15,85 +15,74 @@
     font-family: "Linux Libertine", Georgia, serif;
     border-bottom: 1px solid #a2a9b1;
     font-weight: normal;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-  }
-  #content { overflow: hidden; }
-  #content::after { content: ""; display: block; clear: both; }
-  .thumb {
-    float: right;
-    margin: 0 40px 15px 15px;
-    max-width: 50%;
-    text-align: center;
-  }
-  .thumb img {
-    width: 100%;
-    height: auto;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
-    padding: 3px;
   }
   
   /* Style untuk tabel */
   table {
     border-collapse: collapse;
     width: 100%;
-    margin: 1em 0;
+    margin: 20px 0;
+    font-family: inherit;
   }
   th, td {
     border: 1px solid #a2a9b1;
-    padding: 8px 12px;
+    padding: 10px;
     text-align: left;
     vertical-align: top;
   }
   th {
-    background-color: #f8f9fa;
+    background-color: #f0f0f0;
     font-weight: bold;
   }
   tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #f9f9f9;
+  }
+  
+  .thumb {
+    float: right;
+    margin: 0 0 20px 20px;
+    max-width: 300px;
+  }
+  .thumb img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: #fff;
   }
 </style>
 </head>
 <body>
 <div id="content">Memuat...</div>
+
 <script>
-  function parseMarkdownTable(markdown) {
-    // Cari pola tabel Markdown
-    const tableRegex = /\|(.+)\|\s*\n\|([-\s:|]+)\|\s*\n((?:\|.+\|\s*\n?)*)/g;
+  function parseMarkdownTable(text) {
+    // Cari tabel Markdown sederhana (tanpa spasi di depan)
+    const tableRegex = /\|(.+)\|\n\|([-:\s]+)\|\n((?:\|.+\|\n?)*)/g;
     
-    return markdown.replace(tableRegex, function(match, headerRow, separatorRow, bodyRows) {
+    return text.replace(tableRegex, function(match, header, separator, rows) {
       // Parse header
-      const headers = headerRow.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
+      const headers = header.split('|').map(cell => cell.trim()).filter(cell => cell);
       
-      // Parse alignment dari separator row
-      const separators = separatorRow.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
-      const alignments = separators.map(sep => {
-        if (sep.startsWith(':') && sep.endsWith(':')) return 'center';
-        if (sep.endsWith(':')) return 'right';
-        if (sep.startsWith(':')) return 'left';
-        return 'left';
-      });
-      
-      // Parse body rows
-      const rows = bodyRows.trim().split('\n').map(row => {
-        return row.split('|').map(cell => cell.trim()).filter(cell => cell !== '');
-      });
-      
-      // Buat HTML table
+      // Mulai bikin tabel HTML
       let html = '<table>\n<thead>\n<tr>';
-      headers.forEach((header, i) => {
-        html += `<th align="${alignments[i] || 'left'}">${header}</th>`;
+      headers.forEach(h => {
+        html += `<th>${h}</th>`;
       });
       html += '</tr>\n</thead>\n<tbody>\n';
       
-      rows.forEach(row => {
-        if (row.length > 0) {
-          html += '<tr>';
-          row.forEach((cell, i) => {
-            html += `<td align="${alignments[i] || 'left'}">${cell}</td>`;
-          });
-          html += '</tr>\n';
+      // Parse rows
+      const rowList = rows.trim().split('\n');
+      rowList.forEach(row => {
+        if (row.trim()) {
+          const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
+          if (cells.length > 0) {
+            html += '<tr>';
+            cells.forEach(cell => {
+              html += `<td>${cell}</td>`;
+            });
+            html += '</tr>\n';
+          }
         }
       });
       
@@ -103,50 +92,35 @@
   }
 
   const params = new URLSearchParams(window.location.search);
-  const file   = params.get("file");
+  const file = params.get("file");
   const folder = params.get("folder") || "penamaan_metadata";
 
   if (file) {
-    const fileUrl  = folder + "/" + file;
+    const fileUrl = folder + "/" + file;
     const imageUrl = folder + "/" + file.replace(".txt", ".png");
 
     fetch(fileUrl)
       .then(r => r.text())
       .then(text => {
-        // Parse markdown
+        // Parse markdown dasar
         let html = text
           .replace(/^# (.*$)/gm, "<h1>$1</h1>")
-          .replace(/^## (.*$)/gm, "<h2>$1</h2>")
-          .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
-          .replace(/\*(.*?)\*\*/gim, "<i>$1</i>")
-          .replace(/`(.*?)`/gim, "<code>$1</code>")
-          .replace(/^-\*\*(.*?)\*\*/gm, "<p><strong>$1</strong></p>"); // Handle ** di awal line
+          .replace(/^## (.*$)/gm, "<h2>$2</h2>")
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+          .replace(/-(.*?)\*\*(.*?)\*\*/g, "<p><strong>$2</strong></p>")
+          .replace(/\n/g, "<br>");
         
-        // Parse tabel Markdown
+        // Parse tabel
         html = parseMarkdownTable(html);
         
-        // Handle line breaks untuk yang bukan tabel
-        const lines = html.split('\n');
-        html = lines.map(line => {
-          if (!line.trim().startsWith('<table>') && !line.trim().startsWith('</table>') && 
-              !line.trim().startsWith('<thead>') && !line.trim().startsWith('</thead>') &&
-              !line.trim().startsWith('<tbody>') && !line.trim().startsWith('</tbody>') &&
-              !line.trim().startsWith('<tr>') && !line.trim().startsWith('</tr>') &&
-              !line.trim().startsWith('<th') && !line.trim().startsWith('</th>') &&
-              !line.trim().startsWith('<td')) {
-            return line + '<br>';
-          }
-          return line;
-        }).join('');
-
-        // Cek apakah gambar ada
+        // Cek gambar
         fetch(imageUrl, { method: "HEAD" })
           .then(res => {
             if (res.ok) {
               html = html.replace(/<h1>(.*?)<\/h1>/, (match, p1) => {
                 return `<h1>${p1}</h1>
                         <div class="thumb">
-                          <img src="${imageUrl}" alt="Gambar terkait">
+                          <img src="${imageUrl}" alt="Gambar">
                         </div>`;
               });
             }
