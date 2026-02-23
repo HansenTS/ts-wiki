@@ -1,0 +1,128 @@
+# STANDARISASI CODING STANDARD UNTUK D365BC
+## 1. Naming Convention:
+- **Object Names:** 
+   - Table : [Prefix] [Domain] [Entity]
+     contoh : XTI CustomerExtraInfo  
+   - TableExtension : [Prefix] [Original Table Name] Ext
+     contoh : XTI CustomerExt
+   - Page(List) : [Prefix] [Entity] [Type]
+     contoh : XTI Customer ExtraInfoList
+   - Page(Card) : [Prefix] [Entity] [Type]
+     contoh : XTI Customer ExtraInfoCard
+   - PageExtension : [Prefix] [Original Table Name] Ext
+     contoh : XTI CustomerCardExt
+   - CodeUnit : [Prefix] [Entity] [Action/Purpose]
+     contoh :- XTI CustomerMgmtCU
+             - XTI CustomerLoyaltyCU
+   - Report  : [Prefix] [Purpose]Rpt
+     contoh : XTI CustomerAnalysisRpt
+              XTI SalesInvoiceRpt
+   - Enum : [Prefix] [Context]Enum
+     contoh : XTI CustomerLoyaltyEnum
+
+
+- **ObjectID Range** 
+   - Range di define per modul, 
+     Contoh : 
+      - 50000–50999 → Sales Module
+      - 51000–51999 → Purchasing Module
+      - 52000–52999 → Inventory Module
+
+- **Variable Naming:**
+    - Menggunakan PascalCase - untuk Global Variable, Contoh : salesAmount, invoiceDate
+    - Menggunakan CamelCase - untuk  Local Variable  Contoh : MaxDiscountRate, DefaultCurrency
+    - Nama harus bisa merepresentasikan logika bisnis sehingga dapat digunakan kembali oleh plugin lainnya
+    - Hindari Singkatan yang tidak umum contoh : ✅CustNo, ❌CstNm
+    - Contoh Prefix sesuai Tipe :
+      1. Record Variable :
+         contoh : CustomerRec, SalesHeaderRec
+      2. Boolean Variable :
+         contoh : isCustomerActive, isPostInvoice
+      3. Temporary Record :
+         contoh :  TempSalesVariable, TempCustomer
+      4. List : 
+         contoh : customerLists, invoiceLinesLists
+
+- **Procedure Standards:**
+    - Nama procedure menggunakan PascalCase dan bersifat verb + noun (PostSalesOrder, ValidateCustomer)
+    - Satu procedure satu tanggung jawab (Single Responsibility)
+    - Maksimal ~50 baris per procedure — jika lebih, pecah ke sub-procedure
+    - Hindari parameter lebih dari 5, gunakan Record jika perlu
+    - Selalu tentukan return type secara eksplisit
+
+    Contoh : ✅ Struktur yang benar
+    procedure PostSalesOrder(var SalesHeader: Record "Sales Header"): Boolean
+    var
+        SalesLine: Record "Sales Line";
+        IsSuccess: Boolean;
+    begin
+        // Validasi dulu
+        if not ValidateSalesHeader(SalesHeader) then
+            exit(false);
+
+        // Logic utama
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        if SalesLine.FindSet() then
+            repeat
+                ProcessSalesLine(SalesLine);
+            until SalesLine.Next() = 0;
+
+        exit(true);
+    end;
+
+- ** Error Handling:**
+  - Semua pesan error menggunakan Label (bukan hardcoded string) agar translatable
+  - Gunakan Error() untuk blocking error, Message() untuk informasi
+  - Gunakan Confirm() hanya jika user memang perlu memilih
+  - Sertakan Comment pada Label untuk context translator
+  Contoh : 
+        ✅ Gunakan Error dengan label
+        procedure ValidateCustomer(CustomerNo: Code[20])
+        var
+            Customer: Record Customer;
+            CustomerNotFoundErr: Label 'Customer %1 does not exist.', Comment = '%1 = Customer No.';
+        begin
+            if not Customer.Get(CustomerNo) then
+                Error(CustomerNotFoundErr, CustomerNo);
+        end;
+
+        ✅ Gunakan TestField untuk field wajib
+        SalesHeader.TestField("Sell-to Customer No.");
+        SalesHeader.TestField("Posting Date");
+
+        ❌ Hindari Error dengan hardcoded string
+        Error('Customer tidak ditemukan'); // tidak translatable
+
+-**❌ Hindari : **
+    | Anti-Pattern                   | Kenapa                        | Solusi                                     |
+    |--------------------------------|-------------------------------|--------------------------------------------|
+    | CALCFIELDS di dalam loop       | Sangat lambat                 | Hitung di luar loop atau gunakan FlowField |
+    | Hardcoded string               | Tidak translatable            | Gunakan Label                              |
+    | Magic number                   | Tidak readable                | Gunakan Enum atau Constant                 |
+    | Logic di Page trigger          | Sulit di-test & reuse         | Pindahkan ke Codeunit                      |
+    | Find('-')                      | Deprecated style              | Gunakan FindSet() / FindFirst()            |
+    | Global variable berlebihan     | Side effect tak terduga       | Gunakan parameter                          |
+    | Commit() sembarangan           | Bisa corrupt transaction      | Hanya di titik yang tepat                  |
+
+## Best Practices
+- **Konsistensi:** Selalu gunakan PascalCase untuk semua bagian nama
+- **Deskriptif:** Nama harus jelas menggambarkan fungsi dan tujuan kelas
+- **Pemisahan Concerns:** Wrapper untuk abstraksi data, Plugin untuk event handling, Business untuk logika reusable, Entities untuk menampung list entity dari D365CE
+- **Event Naming:** Gunakan Pre/Post + Validation/Create/Update/Delete untuk plugin events
+- **Action Verbs:** Gunakan kata kerja yang jelas untuk business logic classes (Update, Calculate, Validate, Synchronize, dll)
+
+## Checklist Implementasi
+
+[ ]✅Prefix konsisten digunakan di semua object (contoh:XTI)
+[ ]✅Prefix dipisah dengan spasi (contoh: XTI Sales Header bukan XTISalesHeader)
+[ ]✅Nama object menggunakan PascalCase
+[ ]✅Nama object deskriptif dan mudah dipahami tanpa membuka object-nya
+[ ]✅Tidak ada singkatan tidak umum (contoh: ✅SalesHeader,  ❌SalesHdr)
+[ ]✅Object ID sesuai range yang dialokasikan (50000–99999)
+[ ]✅Semua pesan error/info menggunakan Label → tidak ada hardcoded string
+[ ]✅Tidak ada variable satu huruf (x, i dikecualikan untuk loop sederhana)
+[ ]✅idak ada hardcoded string di Error() / Message()
+[ ]✅idak ada nama object yang ambigu → ABC Misc, ABC Temp Table
+[ ]✅idak ada duplikasi nama object
+[ ]✅Tidak ada magic number tanpa keterangan → gunakan Enum atau constant
+
