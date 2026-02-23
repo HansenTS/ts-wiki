@@ -106,6 +106,12 @@
           .replace(/\*(.*?)\*/gim, "<i>$1</i>")
           .replace(/`(.*?)`/gim, "<code>$1</code>");
 
+       // parse unordered list (- item)
+       html = html.replace(/^- (.*)$/gim, "<ul><li>$1</li></ul>");
+       // parse ordered list (1. item)
+       html = html.replace(/^\d+\.\s+(.*)$/gim, "<ol><li>$1</li></ol>");
+
+
         // parse tabel dulu
         html = parseMarkdownTable(html);
 
