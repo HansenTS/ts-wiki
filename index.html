@@ -16,6 +16,7 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3); 
       display: flex; 
       align-items: center;
+      justify-content: space-between;  /* Logo kiri, image kanan */
       position: relative;
       overflow: hidden;
     }
@@ -40,16 +41,15 @@
       );
     }
     
-    header img { 
-      height: 40px; 
-      margin-right: 15px; 
+    header h1 { 
+      margin: 0; 
+      font-size: 24px; 
       position: relative; 
       z-index: 1; 
     }
     
-    header h1 { 
-      margin: 0; 
-      font-size: 24px; 
+    header img { 
+      height: 40px; 
       position: relative; 
       z-index: 1; 
     }
@@ -88,8 +88,8 @@
 </head>
 <body>
   <header>
-    <img src="logo2.png" alt="Logo">
     <h1>Knowledge Base</h1>
+    <img src="logo.png" alt="Logo">
   </header>
   <div class="container">
     <div id="sidebar-container" class="sidebar"></div>
