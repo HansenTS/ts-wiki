@@ -7,10 +7,48 @@
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; line-height: 1.6; }
-    header { background: linear-gradient(to bottom, #3366cc, #003366); color: white; padding: 20px;
-             box-shadow: 0 2px 5px rgba(0,0,0,0.3); display: flex; align-items: center; }
-    header img { height: 40px; margin-right: 15px; }
-    header h1 { margin: 0; font-size: 24px; }
+    
+    /* Header dengan background biru navy dan strip warna di bawah */
+    header { 
+      background-color: #0d2d5e;
+      color: white; 
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3); 
+      display: flex; 
+      align-items: center;
+      position: relative;
+    }
+    
+    /* Strip warna-warni di bawah header */
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to right, 
+        #00bcd4 0%,      /* Cyan */
+        #00bcd4 25%,     
+        #ffeb3b 25%,     /* Kuning */
+        #ffeb3b 50%,
+        #ff9800 50%,     /* Oranye */
+        #ff9800 75%,
+        #f44336 75%,     /* Merah */
+        #f44336 100%
+      );
+    }
+    
+    header img { 
+      height: 40px; 
+      margin-right: 15px; 
+    }
+    
+    header h1 { 
+      margin: 0; 
+      font-size: 24px;
+    }
+    
     .container { display: flex; min-height: calc(100vh - 60px); }
     .sidebar { width: 250px; background-color: #f8f9fa; border-right: 1px solid #ececec;
                display: flex; flex-direction: column; padding: 10px; }
@@ -19,19 +57,15 @@
                           position: relative; margin-bottom: 5px; }
     .sidebar .menu-item:hover { background-color: #e2e6ea; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-color: #007bff; }
     .sidebar .submenu { display: none; padding-left: 20px; overflow: hidden; transition: max-height 0.3s ease; }
-    .sidebar .submenu-item {   padding: 8px 15px;        /* lebih ramping */
-                              background: none;         /* hilangkan kotak abu-abu */
-                              border: none;             /* hilangkan border */
-                              margin: 3px 0;            /* spasi antar item */
-                              color: #333;              /* warna teks */
-                              cursor: pointer;          /* ubah icon mouse jadi pointer */
-                              transition: color 0.3s ease;
-                            }
-    .sidebar .submenu-item:hover {   color: #007bff;           /* teks berubah biru saat hover */
-                                    background: none;         /* tetap tanpa kotak */
-                                  }
+    .sidebar .submenu-item { padding: 8px 15px; background: none; border: none; margin: 3px 0;
+                              color: #333; cursor: pointer; transition: color 0.3s ease; }
+    .sidebar .submenu-item:hover { color: #007bff; background: none; }
     .sidebar .menu-item.active { background-color: #007bff; color: #fff; }
-    @media (max-width: 768px) { .sidebar { width: 200px; } .sidebar .menu-item, .sidebar .submenu-item { font-size: 14px; } .container { flex-direction: column; } }
+    @media (max-width: 768px) { 
+      .sidebar { width: 200px; } 
+      .sidebar .menu-item, .sidebar .submenu-item { font-size: 14px; } 
+      .container { flex-direction: column; } 
+    }
     .main-content { flex: 1; padding: 20px; display: flex; justify-content: center; align-items: center; }
     iframe { width: 100%; height: 100%; border: none; }
   </style>
@@ -68,7 +102,6 @@
         });
       })
       .catch(err => console.error(err));
-
   </script>
 </body>
 </html>
