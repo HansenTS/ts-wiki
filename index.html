@@ -8,8 +8,9 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; line-height: 1.6; }
     
+    /* Header dengan background biru navy dan strip warna di bawah */
     header { 
-      background: linear-gradient(to right, #3eb4c9, #8bc34a, #fdd835, #ff9800, #ff5722);
+      background-color: #0d2d5e;
       color: white; 
       padding: 20px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3); 
@@ -18,15 +19,40 @@
       position: relative;
       overflow: hidden;
     }
-    header::before {
+    
+    /* Strip warna-warni di bawah header */
+    header::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(0,0,0,0.1));
-      pointer-events: none;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to right, 
+        #00bcd4 0%,      /* Cyan */
+        #00bcd4 25%,     
+        #ffeb3b 25%,     /* Kuning */
+        #ffeb3b 50%,
+        #ff9800 50%,     /* Oranye */
+        #ff9800 75%,
+        #f44336 75%,     /* Merah */
+        #f44336 100%
+      );
     }
-    header img { height: 40px; margin-right: 15px; position: relative; z-index: 1; }
-    header h1 { margin: 0; font-size: 24px; position: relative; z-index: 1; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+    
+    header img { 
+      height: 40px; 
+      margin-right: 15px; 
+      position: relative; 
+      z-index: 1; 
+    }
+    
+    header h1 { 
+      margin: 0; 
+      font-size: 24px; 
+      position: relative; 
+      z-index: 1; 
+    }
 
     .container { display: flex; min-height: calc(100vh - 60px); }
     .sidebar { width: 250px; background-color: #f8f9fa; border-right: 1px solid #ececec;
