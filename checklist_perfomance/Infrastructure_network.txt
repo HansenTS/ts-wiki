@@ -1,0 +1,42 @@
+# Checklist Perfomance D365CE 
+
+## Latency Check
+**Description :** Cek Latency Jaringan ke D365 Server
+**Catatan:** ideal < 50 ms
+Step by Step : 
+1. Buka command prompt
+2. ketik  ping <yoururlcrm> -n 20  (tanpa https)
+3. catat rata-rata latency 
+4. Ketik Tracert <yoururlcrm> (tanpa https)
+
+
+## Bandwith Internet / WAN kantor 
+**Description :** Bandwidth rendah = load halaman lambat, terutama attachment
+Step by Step : 
+1. Buka speedtest.net dari jaringan kantor
+2. Catat hasil download/upload/ping
+3. Bandingkan saat peak hour vs off-peak
+4. Cek utilisasi bandwidth di router/firewall
+
+
+## Verifikasi region Azure datacenter D365
+**Description :** pastikan Data center berdekatan, jangan sampai user di Indonesia tapi DC di Australia = +200ms latency
+Step by step : 
+1. Login ke Power Platform Admin Center
+2. Lihat Settings > Environment detail
+3. Cek kolom ""Region""
+4. Bandingkan dengan lokasi mayoritas user
+
+
+
+**Checklist :**
+[ ]✅Latency Ping < 50 ms 
+[ ]✅Jumlah Hop dari Tracert < 20  
+[ ]✅Latency Ping dari Tracert < 50 ms
+[ ]✅Region sama / dekat dengan data center 
+[ ]✅Dokumentasikan result speed test 
+[ ]✅Dokumentasikan region 
+[ ]✅Dokumentasikan Tracert, Ping
+
+
+https://<yoururlcrm>/tools/diagnostics/diag.asp

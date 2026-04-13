@@ -1,0 +1,83 @@
+# Checklist Perfomance D365CE 
+
+## Browser
+**Description :** Check Versi Browser (chrome/Edge/Firefox/etc)
+**Catatan:** Browser harus latest update 
+Step by Step : 
+1. Chrome: buka chrome://settings/help
+2. Edge: buka edge://settings/help
+3. Pastikan versi terbaru terinstall
+4. Aktifkan auto-update jika belum
+
+
+## Browser Cache 
+**Description :** Cache korup sering menjadi penyebab loading lama
+Step by Step : 
+1. Tekan Ctrl+Shift+Delete di browser
+2. Pilih ""All time"" untuk time range
+3. Centang Cache, Cookies, Site Data
+4. Klik Clear data, lalu restart browser dan test ulang
+
+## Browser Extension
+**Description :** pastikan ekstension tidak interfere dengan D365CE
+Step by step : 
+1. Chrome: buka chrome://extensions
+2. Matikan semua ekstensi (toggle off)
+3. Test D365 apakah lebih cepat
+4. Aktifkan kembali satu per satu untuk identifikasi pelaku
+
+## Hardware Acceleration
+**Description :** Mempercepat rendering dengan GPU.
+Step by step : 
+1. Chrome: Settings > System > Use hardware acceleration when available
+2. Edge: Settings > System and performance > Use hardware acceleration
+3. Aktifkan jika belum, restart browser
+4. Test perbandingan performa rendering
+
+## Compare with another Browser
+**Description :** Identifikasi apakah isu spesifik ke satu browser.
+Step by step : 
+1. Buka halaman D365 yang sama di Chrome, Edge, Firefox
+2. Ukur waktu load dengan stopwatch atau DevTools
+3. Bandingkan hasilnya
+4. Jika satu browser lebih lambat → masalah browser-specific
+
+## Spesifikasi Perangkat
+**Description :** Pastikan hardware memadai (RAM/Storage).
+Step by step : 
+1. Tekan Windows+Pause/Break → lihat RAM
+2. Buka Device Manager → Disk Drives untuk tipe storage
+3. Task Manager > Performance tab saat D365 dibuka
+4. Pastikan RAM usage < 80% saat bekerja
+
+
+**Checklist :**
+[ ]✅Cek versi Chrome
+[ ]✅Cek versi Edge 
+[ ]✅Pastikan versi terbaru terpasang
+[ ]✅Aktifkan auto-update
+
+[ ]✅Pilih All time untuk time range (clear cache) 
+[ ]✅Clear data, restart browser, lalu test ulang
+
+[ ]✅Matikan semua ekstensi (toggle off)
+[ ]✅Test D365 apakah lebih cepat
+[ ]✅Aktifkan kembali satu per satu untuk identifikasi
+
+[ ]✅Chrome → Settings → System → Use hardware acceleration when available
+[ ]✅Edge → Settings → System and performance → Use hardware acceleration
+[ ]✅Aktifkan jika belum, restart browser
+[ ]✅Test performa rendering
+
+[ ]✅Buka halaman D365 di Chrome, Edge, Firefox
+[ ]✅Ukur waktu load (stopwatch/DevTools)
+[ ]✅Bandingkan hasil
+[ ]✅Identifikasi apakah isu spesifik ke satu browse
+
+[ ]✅Tekan Windows+Pause/Break → lihat RAM
+[ ]✅Device Manager → Disk Drives → cek tipe storage (SSD/HDD)
+[ ]✅Task Manager → tab Performance saat D365 dibuka
+[ ]✅ Pastikan RAM usage < 80%
+
+
+https://<yoururlcrm>/tools/diagnostics/diag.asp
