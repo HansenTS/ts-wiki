@@ -5,9 +5,9 @@
 **Catatan:** ideal < 50 ms
 Step by Step : 
 1. Buka command prompt
-2. ketik  ping <yoururlcrm> -n 20  (tanpa https)
+2. ketik  ping (yoururlcrm) -n 20  (tanpa https)
 3. catat rata-rata latency 
-4. Ketik Tracert <yoururlcrm> (tanpa https)
+4. Ketik Tracert (yoururlcrm) (tanpa https)
 
 
 ## Bandwith Internet / WAN kantor 
